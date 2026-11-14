@@ -15,7 +15,6 @@ public class BubbleSortDoublyLinked {
            
                 if (current.getElement().compareTo(current.getNext().getElement()) > 0) {
                     
-                    // Échange des valeurs (plus simple que de manipuler tous les liens)
                     String temp = current.getElement();
                     current.setElement(current.getNext().getElement());
                     current.getNext().setElement(temp);
