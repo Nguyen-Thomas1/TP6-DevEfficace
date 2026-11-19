@@ -1,39 +1,39 @@
-// 2.1
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class QuicksortQueue {
 
-    public static void partition(Queue<Integer> q, int pivot, Queue<Integer> petits, Queue<Integer> egaux, Queue<Integer> grands) {
-        while (!q.isEmpty()) {
-            int val = q.poll();
-            if (val < pivot) {
-                petits.add(val);
-            } else if (val == pivot) {
-                egaux.add(val);
+    public static <K> void partition(Queue<K> s, K pivot, Queue<K> l, Queue<K> e, Queue<K> g, Comparator<K> comp) {
+        while (!s.isEmpty()) {
+            K element = s.poll();
+            int c = comp.compare(element, pivot);
+            if (c < 0) {
+                l.add(element);
+            } else if (c == 0) {
+                e.add(element);
             } else {
-                grands.add(val);
+                g.add(element);
             }
         }
     }
 
-    public static void quickSort(Queue<Integer> q) {
-        if (q.size() <= 1) {
-            return;
-        }
+    public static <K> void quickSort(Queue<K> s, Comparator<K> comp) {
+        int n = s.size();
+        if (n < 2) return;
 
-        int pivot = q.peek();
-        Queue<Integer> petits = new LinkedList<>();
-        Queue<Integer> egaux = new LinkedList<>();
-        Queue<Integer> grands = new LinkedList<>();
+        K pivot = s.peek();
+        Queue<K> l = new LinkedList<>();
+        Queue<K> e = new LinkedList<>();
+        Queue<K> g = new LinkedList<>();
 
-        partition(q, pivot, petits, egaux, grands);
+        partition(s, pivot, l, e, g, comp);
 
-        quickSort(petits);
-        quickSort(grands);
+        quickSort(l, comp);
+        quickSort(g, comp);
 
-        q.addAll(petits);
-        q.addAll(egaux);
-        q.addAll(grands);
+        while (!l.isEmpty()) s.add(l.poll());
+        while (!e.isEmpty()) s.add(e.poll());
+        while (!g.isEmpty()) s.add(g.poll());
     }
 }
