@@ -1,0 +1,8 @@
+
+Complexité dans le pire cas : O(n^2) (lorsque le pivot divise la liste de façon très déséquilibrée, par exemple sur une liste déjà triée avec un pivot fixe aux extrémités).
+
+Comparaison : Le choix aléatoire du pivot évite de tomber systématiquement dans le pire cas $O(n^2)$ sur des entrées ordonnées, en conservant une complexité moyenne en O(n \log n) au prix d'un léger coût d'appel au générateur aléatoire.
+
+Heuristique : Règle pratique et rapide qui cherche une bonne solution approchée (ici, un pivot proche du milieu) sans garantir l'optimum absolu ni coûter trop cher en calcul.
+
+Médiane-de-trois : Choisit la valeur médiane parmi les éléments en tête, au milieu et en queue de la plage courante.
