@@ -1,33 +1,54 @@
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class QuicksortQueue {
 
-
-
-    public static void quickSort(Queue<K> s) {
+    public static <K> void quickSort(Queue<K> s, Comparator<K> comp) {
         int n = s.size();
         if (n < 2) return;
-        
-        K pivot = s.first();
-        Queue<K> l,g,e;
-            
-        while (!s.isEmpty())
-            k element = s.dequeue();
-        int c = comp.compare(pivot,element);
 
-        if (c < 0) {
-            l.enqueue(element);
-        else if (c == 0){
-            e.enqueue(element);
-        else {
-            g.enqueue(element);
+        K pivot = s.peek();
+        Queue<K> l = new LinkedList<>();
+        Queue<K> e = new LinkedList<>();
+        Queue<K> g = new LinkedList<>();
 
-        quickSort(l,comp);
-        quickSort(g,comp);
+        while (!s.isEmpty()) {
+            K element = s.poll();
+            int c = comp.compare(pivot, element);
 
-        while (!l.isEmpty()
-            s.enqueue(l.dequeue());
-        
+            if (c < 0) {
+                g.add(element);
+            } else if (c == 0) {
+                e.add(element);
+            } else {
+                l.add(element);
+            }
+        }
+
+        quickSort(l, comp);
+        quickSort(g, comp);
+
+        while (!l.isEmpty()) {
+            s.add(l.poll());
+        }
+        while (!e.isEmpty()) {
+            s.add(e.poll());
+        }
+        while (!g.isEmpty()) {
+            s.add(g.poll());
+        }
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> s = new LinkedList<>();
+        s.add(4);
+        s.add(2);
+        s.add(7);
+        s.add(1);
+        s.add(3);
+
+        quickSort(s, Integer::compareTo);
+        System.out.println(s);
     }
 }
